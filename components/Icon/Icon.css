@@ -1,0 +1,13 @@
+.Icon {
+  color: white;
+  width: inherit;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Icon > svg {
+  width: 36px;
+  height: 36px;
+}

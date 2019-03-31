@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Icon</title>
+    <style>
+      body {
+        /* background-color: rgba(0, 0, 0, 0); */
+        background-color: #039be5;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: inherit;
+        height: inherit;
+      }
+      .icon {
+        /* background-color: #039be5; */
+        color: white;
+      }
+      .icon_container {
+        display: flex;
+      }
+      .node {
+        font-size: 20em;
+      }
+      .node:nth-child(1) {
+        transform: rotateY(180deg);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <div class="icon">
+          <div class="icon_container">
+            <div class="node">R</div>
+            <div class="node">R</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

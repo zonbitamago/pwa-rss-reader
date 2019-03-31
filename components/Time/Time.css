@@ -1,0 +1,13 @@
+.Time {
+  color: white;
+  width: inherit;
+  height: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Time > div {
+  font-size: 10px;
+}
