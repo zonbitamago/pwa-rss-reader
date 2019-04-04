@@ -9,8 +9,8 @@
 .Header_Left,
 .Header_Center,
 .Header_Right {
-  margin-top: auto;
-  margin-bottom: auto;
+  margin-top: 6px;
+  margin-bottom: 6px;
 }
 
 .Header_Left {
@@ -25,4 +25,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.Header_Center > h3 {
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
