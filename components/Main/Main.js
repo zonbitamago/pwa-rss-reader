@@ -1,5 +1,13 @@
+import Item from "../Item/Item";
+
 const Main = () => {
-  return <div className="Main">Welcome to Next.js!</div>;
+  return (
+    <div className="Main">
+      <Item />
+      <Item />
+      <Item />
+    </div>
+  );
 };
 
 export default Main;
