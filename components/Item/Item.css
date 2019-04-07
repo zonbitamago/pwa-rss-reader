@@ -31,4 +31,7 @@
 
 .Item .divider {
   margin-top: 10px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.12);
+  height: 1px;
 }
