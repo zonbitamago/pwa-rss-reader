@@ -4,8 +4,10 @@ import Home from "@material-ui/icons/Home";
 import RssFeed from "@material-ui/icons/RssFeed";
 import Typography from "@material-ui/core/Typography";
 import { TiSocialTwitter } from "react-icons/ti";
+import dayjs from "dayjs";
 
 const Header = () => {
+  const updateDate = dayjs().format("HH:mm:ss");
   return (
     <div className="Header">
       <div className="Header_Left">
@@ -25,7 +27,7 @@ const Header = () => {
         </Icon>
       </div>
       <div className="Header_Right">
-        <div>update : HH:mm:SS</div>
+        <div>update : {updateDate}</div>
       </div>
     </div>
   );

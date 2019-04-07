@@ -19,6 +19,8 @@
 
 .Header_Right {
   margin-right: 3px;
+  display: flex;
+  align-items: center;
 }
 
 .Header_Center {
