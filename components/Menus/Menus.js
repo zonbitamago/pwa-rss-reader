@@ -7,8 +7,11 @@ import Settings from "@material-ui/icons/Settings";
 import { GoMarkGithub } from "react-icons/go";
 import Icon from "../Icon/Icon";
 import RegistedListModal from "../RegistedListModal/RegistedListModal";
+import SettingModal from "../SettingModal/SettingModal";
+
 const Menus = () => {
   const [registedListModalOpen, setRegistedListModalOpen] = useState(false);
+  const [settingModalOpen, setSettingModalOpen] = useState(false);
   return (
     <div className="Menus">
       <Icon>
@@ -33,7 +36,19 @@ const Menus = () => {
         <IndeterminateCheckBox />
       </Icon>
       <Icon>
-        <Settings />
+        <Settings
+          onClick={() => {
+            // this.props.store.ItemStore.getSettings();
+            setSettingModalOpen(true);
+          }}
+        />
+        <SettingModal
+          open={settingModalOpen}
+          handleClose={() => {
+            setSettingModalOpen(false);
+          }}
+          // store={this.props.store}
+        />
       </Icon>
       <Icon>
         <GoMarkGithub />
