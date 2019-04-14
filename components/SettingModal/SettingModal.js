@@ -5,35 +5,51 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
+import { observer } from "mobx-react";
+import React, { Component } from "react";
+import ItemStore from "../../store/ItemStore";
 
-const SettingModal = props => {
-  const yesButtonClick = () => {
+const store = new ItemStore();
+@observer
+class SettingModal extends Component {
+  constructor(props) {
+    super(props);
+    this.yesButtonClick = this.yesButtonClick.bind(this);
+  }
+  yesButtonClick() {
     props.handleClose();
-  };
-  return (
-    <div className="SettingModal">
-      <Dialog
-        open={props.open}
-        onClose={props.handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Settings</DialogTitle>
-        <DialogContent>
-          <Input
-            name="UpdateDuration"
-            // value={this.props.store.ItemStore.updateDuration}
-            // changeParentVal={val => {
-            //   this.props.store.ItemStore.updateDuration = val;
-            // }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button type="yes" handleClick={yesButtonClick} />
-          <Button type="no" handleClick={props.handleClose} />
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
-};
+  }
+  render() {
+    const { open, handleClose } = this.props;
+    return (
+      <div className="SettingModal">
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Settings</DialogTitle>
+          <DialogContent>
+            <Input
+              name="UpdateDuration"
+              // value={this.props.store.ItemStore.updateDuration}
+              // changeParentVal={val => {
+              //   this.props.store.ItemStore.updateDuration = val;
+              // }}
+              value={store.updateDuration}
+              changeParentVal={val => {
+                store.setUpdateDuration(val);
+              }}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button type="yes" handleClick={this.yesButtonClick} />
+            <Button type="no" handleClick={handleClose} />
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  }
+}
 
 export default SettingModal;
