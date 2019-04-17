@@ -1,4 +1,5 @@
 import { action, observable } from "mobx";
+import FetchRssFeed from "../utils/FetchRssFeed";
 
 class ItemStore {
   @observable updateDuration = 5;
@@ -10,7 +11,9 @@ class ItemStore {
   }
 
   @action.bound
-  fetchItems() {
+  async fetchItems() {
+    const urls = ["https://feedforall.com/sample-feed.xml"];
+    await FetchRssFeed(urls);
     const item = {
       alt: "alt",
       src: "https://www.google.com/s2/favicons?domain=qiita.com",

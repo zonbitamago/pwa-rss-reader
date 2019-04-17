@@ -30,7 +30,7 @@ describe("ItemStore", function() {
 
   describe("fetchItems", function() {
     it("fetchItemsFromRss", async () => {
-      store.fetchItems();
+      await store.fetchItems();
       const item = store.items[0];
       expect(item.alt).toBe("alt");
       expect(item.src).toBe(
