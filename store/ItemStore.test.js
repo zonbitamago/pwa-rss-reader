@@ -34,14 +34,12 @@ describe("ItemStore", function() {
       const item = store.items[0];
       expect(item.alt).toBe("alt");
       expect(item.src).toBe(
-        "https://www.google.com/s2/favicons?domain=qiita.com"
+        "https://www.google.com/s2/favicons?domain=www.feedforall.com"
       );
       expect(item.domainName).toBe("Qiita");
-      expect(item.date).toBe("2019/04/13");
-      expect(item.url).toBe(
-        "https://qiita.com/zonbitamago/items/4e215e305062dde016bb"
-      );
-      expect(item.itemName).toBe("無料で爆速なWebアプリケーションを作ろう！");
+      expect(item.date).toBe("2004/10/27");
+      expect(item.url).toBe("http://www.feedforall.com");
+      expect(item.itemName).toBe("RSS Resources");
     });
   });
 });

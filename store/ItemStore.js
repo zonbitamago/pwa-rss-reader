@@ -1,5 +1,6 @@
 import { action, observable } from "mobx";
 import FetchRssFeed from "../utils/FetchRssFeed";
+import dayjs from "dayjs";
 
 class ItemStore {
   @observable updateDuration = 5;
@@ -13,16 +14,27 @@ class ItemStore {
   @action.bound
   async fetchItems() {
     const urls = ["https://feedforall.com/sample-feed.xml"];
-    await FetchRssFeed(urls);
-    const item = {
-      alt: "alt",
-      src: "https://www.google.com/s2/favicons?domain=qiita.com",
-      domainName: "Qiita",
-      date: "2019/04/13",
-      url: "https://qiita.com/zonbitamago/items/4e215e305062dde016bb",
-      itemName: "無料で爆速なWebアプリケーションを作ろう！"
-    };
-    this.items.push(item);
+    const json = await FetchRssFeed(urls);
+    json.results.forEach(node => {
+      const src =
+        "https://www.google.com/s2/favicons?domain=" +
+        node.feed.link.split("//")[1];
+
+      node.feed.items.forEach(element => {
+        const itemName = element.title;
+        const url = element.link;
+        const date = dayjs(element.publishedParsed).format("YYYY/MM/DD");
+        const item = {
+          alt: "alt",
+          src: src,
+          domainName: "Qiita",
+          date: date,
+          url: url,
+          itemName: itemName
+        };
+        this.items.push(item);
+      });
+    });
   }
 }
 
