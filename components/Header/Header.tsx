@@ -7,7 +7,7 @@ import { TiSocialTwitter } from "react-icons/ti";
 import dayjs from "dayjs";
 
 const Header = () => {
-  const updateDate = dayjs().format("HH:mm:ss");
+  const updateDate: string = dayjs().format("HH:mm:ss");
   return (
     <div className="Header">
       <div className="Header_Left">

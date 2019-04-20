@@ -1,7 +1,11 @@
 import nodefetch from "node-fetch";
 
-const FetchRssFeed = async urls => {
-  urls = urls.map(url => {
+interface URL {
+  url: string;
+}
+
+const FetchRssFeed = async (urlsArr: string[]) => {
+  const urls: URL[] = urlsArr.map((url: string) => {
     return { url: url };
   });
 

@@ -1,6 +1,12 @@
 import "./Button.css";
 import MaterialButton from "@material-ui/core/Button";
-const Button = props => {
+
+export interface ButtonInterface {
+  type: string;
+  handleClick: any;
+}
+
+const Button = (props: ButtonInterface) => {
   const StyleYes = {
     background: "#03A9F4",
     color: "white",

@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import "./Input.css";
 import TextField from "@material-ui/core/TextField";
-const Input = props => {
+
+export interface InputInterface {
+  value: string;
+  changeParentVal: any;
+  name: string;
+}
+
+const Input = (props: InputInterface) => {
   const [val, setVal] = useState(props.value != undefined ? props.value : "");
 
   const changeVal = e => {

@@ -16,7 +16,8 @@ module.exports = {
         "styled-jsx": {},
         "class-properties": {}
       }
-    ]
+    ],
+    ["@zeit/next-typescript/babel"]
   ],
   plugins: [
     ["@babel/plugin-proposal-decorators", { legacy: true }],
