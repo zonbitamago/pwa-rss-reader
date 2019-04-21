@@ -6,7 +6,7 @@ export interface ButtonInterface {
   handleClick: any;
 }
 
-const Button = (props: ButtonInterface) => {
+const Button = props => {
   const StyleYes = {
     background: "#03A9F4",
     color: "white",
@@ -45,6 +45,8 @@ const Button = (props: ButtonInterface) => {
         </MaterialButton>
       </div>
     );
+  } else {
+    return <div />;
   }
 };
 export default Button;

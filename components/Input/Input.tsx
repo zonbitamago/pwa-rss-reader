@@ -3,7 +3,7 @@ import "./Input.css";
 import TextField from "@material-ui/core/TextField";
 
 export interface InputInterface {
-  value: string;
+  value: string | number;
   changeParentVal: any;
   name: string;
 }

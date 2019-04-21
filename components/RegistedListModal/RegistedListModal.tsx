@@ -10,11 +10,16 @@ import InfoIcon from "@material-ui/icons/Info";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 
-const RegistedListModal = props => {
+export interface RegistedListModalInterface {
+  open: boolean;
+  handleClose: any;
+}
+
+const RegistedListModal = (props: RegistedListModalInterface) => {
   const urlList = null;
-  const yesButtonClick = null;
+  const yesButtonClick = undefined;
   const open = false;
-  const snackbarClose = null;
+  const snackbarClose = undefined;
   const message = "";
   const className = "";
 
@@ -30,6 +35,8 @@ const RegistedListModal = props => {
           {urlList}
           <Input
             name="Name"
+            value=""
+            changeParentVal={() => console.log("RegistedModalInput!")}
             // value={this.props.store.FeedListStore.name}
             // changeParentVal={val => {
             //   this.props.store.FeedListStore.name = val;
@@ -37,6 +44,8 @@ const RegistedListModal = props => {
           />
           <Input
             name="URL"
+            value=""
+            changeParentVal={() => console.log("RegistedModalInput!")}
             // value={this.props.store.FeedListStore.url}
             // changeParentVal={val => {
             //   this.props.store.FeedListStore.url = val;

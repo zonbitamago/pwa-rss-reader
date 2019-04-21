@@ -10,14 +10,20 @@ import React, { Component } from "react";
 import ItemStore from "../../store/ItemStore";
 
 const store = new ItemStore();
+
+export interface SettingModalInterface {
+  handleClose: any;
+  open: boolean;
+}
+
 @observer
-class SettingModal extends Component {
+class SettingModal extends Component<SettingModalInterface> {
   constructor(props) {
     super(props);
     this.yesButtonClick = this.yesButtonClick.bind(this);
   }
   yesButtonClick() {
-    props.handleClose();
+    this.props.handleClose();
   }
   render() {
     const { open, handleClose } = this.props;
