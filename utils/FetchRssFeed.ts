@@ -16,7 +16,12 @@ const FetchRssFeed = async (urlsArr: string[]) => {
   const res = await nodefetch("https://goparallelfeed.now.sh", {
     method: "post",
     body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
+    headers: {
+      // "Content-Type": "application/json",
+      // CORS対策のため
+      // https://github.com/axios/axios/issues/853#issuecomment-432283879
+      "content-type": "application/x-www-form-urlencoded"
+    }
   });
 
   const json = await res.json();

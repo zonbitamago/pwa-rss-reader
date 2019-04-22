@@ -2,8 +2,13 @@ import "./Item.css";
 import Divider from "@material-ui/core/Divider";
 import DomainIcon from "../DomainIcon/DomainIcon";
 import dayjs from "dayjs";
+import { ItemElementInterface } from "../../store/ItemStore";
 
-const Item = () => {
+export interface ItemInterface {
+  itemElement: ItemElementInterface;
+}
+
+const Item = (props: ItemInterface) => {
   const alt = "alt";
   const src = "https://www.google.com/s2/favicons?domain=qiita.com";
   const domainName = "Qiita";

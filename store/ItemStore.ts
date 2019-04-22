@@ -2,7 +2,7 @@ import { action, observable } from "mobx";
 import FetchRssFeed from "../utils/FetchRssFeed";
 import dayjs from "dayjs";
 
-interface Item {
+export interface ItemElementInterface {
   alt: string;
   src: string;
   domainName: string;
@@ -13,7 +13,7 @@ interface Item {
 
 class ItemStore {
   @observable public updateDuration: number = 5;
-  @observable public items: Item[] = [];
+  @observable public items: ItemElementInterface[] = [];
 
   @action.bound
   setUpdateDuration(updateDuration: number): void {
@@ -35,7 +35,7 @@ class ItemStore {
         const date: string = dayjs(element.publishedParsed).format(
           "YYYY/MM/DD"
         );
-        const item: Item = {
+        const item: ItemElementInterface = {
           alt: "alt",
           src: src,
           domainName: "Qiita",

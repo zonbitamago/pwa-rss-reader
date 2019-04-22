@@ -7,13 +7,12 @@ import Input from "../Input/Input";
 import Button from "../Button/Button";
 import { observer } from "mobx-react";
 import React, { Component } from "react";
-import ItemStore from "../../store/ItemStore";
-
-const store = new ItemStore();
+import { StoreContainerInterface } from "../../store/StoreContainer";
 
 export interface SettingModalInterface {
   handleClose: any;
   open: boolean;
+  store: StoreContainerInterface;
 }
 
 @observer
@@ -26,7 +25,7 @@ class SettingModal extends Component<SettingModalInterface> {
     this.props.handleClose();
   }
   render() {
-    const { open, handleClose } = this.props;
+    const { open, handleClose, store } = this.props;
     return (
       <div className="SettingModal">
         <Dialog
@@ -42,9 +41,9 @@ class SettingModal extends Component<SettingModalInterface> {
               // changeParentVal={val => {
               //   this.props.store.ItemStore.updateDuration = val;
               // }}
-              value={store.updateDuration}
+              value={store.ItemStore.updateDuration}
               changeParentVal={val => {
-                store.setUpdateDuration(val);
+                store.ItemStore.setUpdateDuration(val);
               }}
             />
           </DialogContent>

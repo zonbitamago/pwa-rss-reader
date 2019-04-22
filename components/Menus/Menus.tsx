@@ -8,14 +8,24 @@ import { GoMarkGithub } from "react-icons/go";
 import Icon from "../Icon/Icon";
 import RegistedListModal from "../RegistedListModal/RegistedListModal";
 import SettingModal from "../SettingModal/SettingModal";
+import { StoreContainerInterface } from "../../store/StoreContainer";
 
-const Menus = () => {
+export interface MenusInterface {
+  store: StoreContainerInterface;
+}
+
+const Menus = (props: MenusInterface) => {
   const [registedListModalOpen, setRegistedListModalOpen] = useState(false);
   const [settingModalOpen, setSettingModalOpen] = useState(false);
+  const { store } = props;
   return (
     <div className="Menus">
       <Icon>
-        <Refresh />
+        <Refresh
+          onClick={() => {
+            store.ItemStore.fetchItems();
+          }}
+        />
       </Icon>
       <Icon>
         <RssFeed
@@ -47,7 +57,7 @@ const Menus = () => {
           handleClose={() => {
             setSettingModalOpen(false);
           }}
-          // store={this.props.store}
+          store={props.store}
         />
       </Icon>
       <Icon>
