@@ -14,6 +14,8 @@ export interface ItemElementInterface {
 class ItemStore {
   @observable public updateDuration: number = 5;
   @observable public items: ItemElementInterface[] = [];
+  @observable public saveItems: ItemElementInterface[] = [];
+  @observable public isLoading: boolean = false;
 
   @action.bound
   setUpdateDuration(updateDuration: number): void {
@@ -22,6 +24,8 @@ class ItemStore {
 
   @action.bound
   async fetchItems(): Promise<void> {
+    this.isLoading = true;
+
     const urls: string[] = ["https://feedforall.com/sample-feed.xml"];
     const json = await FetchRssFeed(urls);
     json.results.forEach(node => {
@@ -33,7 +37,7 @@ class ItemStore {
         const itemName: string = element.title;
         const url: string = element.link;
         const date: string = dayjs(element.publishedParsed).format(
-          "YYYY/MM/DD"
+          "YYYY/MM/DD HH:mm:ss"
         );
         const item: ItemElementInterface = {
           alt: "alt",
@@ -43,9 +47,13 @@ class ItemStore {
           url: url,
           itemName: itemName
         };
-        this.items.push(item);
+        this.saveItems.push(item);
       });
     });
+
+    this.items = this.saveItems;
+    this.saveItems = [];
+    this.isLoading = false;
   }
 }
 

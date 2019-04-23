@@ -9,12 +9,12 @@ export interface ItemInterface {
 }
 
 const Item = (props: ItemInterface) => {
-  const alt = "alt";
-  const src = "https://www.google.com/s2/favicons?domain=qiita.com";
-  const domainName = "Qiita";
-  const date = dayjs().format("YYYY/MM/DD HH:mm:ss");
-  const url = "https://qiita.com/zonbitamago/items/4e215e305062dde016bb";
-  const itemName = "無料で爆速なWebアプリケーションを作ろう！";
+  const alt = props.itemElement.alt;
+  const src = props.itemElement.src;
+  const domainName = props.itemElement.domainName;
+  const date = props.itemElement.date;
+  const url = props.itemElement.url;
+  const itemName = props.itemElement.itemName;
   return (
     <div className="Item">
       <div className="container">
