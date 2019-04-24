@@ -1,6 +1,6 @@
 import { action, observable } from "mobx";
 import FetchRssFeed from "../utils/FetchRssFeed";
-import dayjs from "dayjs";
+import * as DayFormatter from "../utils/DayFormatter";
 
 export interface ItemElementInterface {
   alt: string;
@@ -16,6 +16,7 @@ class ItemStore {
   @observable public items: ItemElementInterface[] = [];
   @observable public saveItems: ItemElementInterface[] = [];
   @observable public isLoading: boolean = false;
+  @observable public updateTime: string = DayFormatter.HH24MMSS();
 
   @action.bound
   setUpdateDuration(updateDuration: number): void {
@@ -36,8 +37,8 @@ class ItemStore {
       node.feed.items.forEach(element => {
         const itemName: string = element.title;
         const url: string = element.link;
-        const date: string = dayjs(element.publishedParsed).format(
-          "YYYY/MM/DD HH:mm:ss"
+        const date: string = DayFormatter.YYYYMMDDHH24MMSS(
+          element.publishedParsed
         );
         const item: ItemElementInterface = {
           alt: "alt",
@@ -54,6 +55,7 @@ class ItemStore {
     this.items = this.saveItems;
     this.saveItems = [];
     this.isLoading = false;
+    this.updateTime = DayFormatter.HH24MMSS();
   }
 }
 

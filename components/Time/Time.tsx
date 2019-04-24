@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import "./Time.css";
 import dayjs from "dayjs";
+import * as DayFormatter from "../../utils/DayFormatter";
 
 const Time = () => {
   const getMMDD = () => {
-    return dayjs().format("M/D");
+    return DayFormatter.MD();
   };
   const getHHmmss = () => {
-    return dayjs().format("HH:mm:ss");
+    return DayFormatter.HH24MMSS();
   };
 
   const [MMDD, setMMDD] = useState(getMMDD());

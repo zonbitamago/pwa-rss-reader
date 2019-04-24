@@ -1,9 +1,15 @@
 import ItemStore from "./ItemStore";
+import MockDate from "mockdate";
 
 let store;
 
 beforeEach(() => {
   store = new ItemStore();
+  MockDate.set("2019-04-13 12:34:56");
+});
+
+afterEach(() => {
+  MockDate.reset();
 });
 
 describe("ItemStore", function() {
@@ -11,6 +17,7 @@ describe("ItemStore", function() {
     expect(store.updateDuration).toBe(5);
     expect(store.items.length).toBe(0);
     expect(store.isLoading).toBeFalsy();
+    expect(store.updateTime).toBe("12:34:56");
   });
 
   describe("setUpdateDuration", function() {
@@ -28,7 +35,11 @@ describe("ItemStore", function() {
 
   describe("fetchItems", function() {
     it("fetchItemsFromRss", async () => {
+      MockDate.set("2019-04-15 23:45:01");
       await store.fetchItems();
+
+      expect(store.updateTime).toBe("23:45:01");
+
       const item = store.items[0];
       expect(item.alt).toBe("alt");
       expect(item.src).toBe(

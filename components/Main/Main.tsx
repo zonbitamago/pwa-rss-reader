@@ -17,30 +17,8 @@ class Main extends Component<MainInterface> {
     const items = store.ItemStore.items.map((node, idx) => {
       return <Item key={idx} itemElement={node} />;
     });
-    return (
-      <div className="Main">
-        {/* <Item />
-                  <Item />
-                  <Item /> */}
-        {items}
-      </div>
-    );
+    return <div className="Main">{items}</div>;
   }
 }
-
-// const Main = (props: MainInterface) => {
-//   const { store } = props;
-//   const items = store.ItemStore.items.map(node => {
-//     return <Item itemElement={node} />;
-//   });
-//   return (
-//     <div className="Main">
-//       {/* <Item />
-//       <Item />
-//       <Item /> */}
-//       {items}
-//     </div>
-//   );
-// };
 
 export default Main;

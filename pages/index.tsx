@@ -11,7 +11,7 @@ const Index = () => {
   return (
     <div className="Index">
       <Side store={store} />
-      <Header />
+      <Header store={store} />
       <Main store={store} />
     </div>
   );
