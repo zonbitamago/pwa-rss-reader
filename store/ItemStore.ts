@@ -17,6 +17,7 @@ class ItemStore {
   @observable public saveItems: ItemElementInterface[] = [];
   @observable public isLoading: boolean = false;
   @observable public updateTime: string = DayFormatter.HH24MMSS();
+  public timerId: NodeJS.Timeout | undefined;
 
   @action.bound
   setUpdateDuration(updateDuration: number): void {
@@ -56,6 +57,20 @@ class ItemStore {
     this.saveItems = [];
     this.isLoading = false;
     this.updateTime = DayFormatter.HH24MMSS();
+  }
+
+  @action.bound
+  async setTimer() {
+    if (this.timerId != undefined) {
+      clearInterval(this.timerId);
+    }
+
+    // 初回呼び出し
+    await this.fetchItems();
+    this.timerId = setInterval(
+      this.fetchItems,
+      this.updateDuration * 60 * 1000
+    );
   }
 }
 

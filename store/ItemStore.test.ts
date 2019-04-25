@@ -18,6 +18,7 @@ describe("ItemStore", function() {
     expect(store.items.length).toBe(0);
     expect(store.isLoading).toBeFalsy();
     expect(store.updateTime).toBe("12:34:56");
+    expect(store.timerId).toBeUndefined();
   });
 
   describe("setUpdateDuration", function() {
@@ -49,6 +50,24 @@ describe("ItemStore", function() {
       expect(item.date).toBe("2004/10/27 04:01:01");
       expect(item.url).toBe("http://www.feedforall.com");
       expect(item.itemName).toBe("RSS Resources");
+    });
+  });
+
+  describe("setTimer", function() {
+    it("initialTimer", async () => {
+      await store.setTimer();
+      expect(store.timerId).toBeDefined();
+    });
+
+    it("timerId reset", async () => {
+      const timerId = setInterval(() => {
+        //テストのため、何も行わない
+      }, 60 * 1000);
+
+      store.timerId = timerId;
+
+      await store.setTimer();
+      expect(store.timerId).not.toEqual(timerId);
     });
   });
 });

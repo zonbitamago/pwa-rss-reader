@@ -7,6 +7,8 @@ import * as StoreContainer from "../store/StoreContainer";
 
 const store = StoreContainer.getInstance();
 
+store.ItemStore.setTimer();
+
 const Index = () => {
   return (
     <div className="Index">
