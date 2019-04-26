@@ -1,7 +1,7 @@
 import ItemStore from "./ItemStore";
 import MockDate from "mockdate";
 
-let store;
+let store: ItemStore;
 
 beforeEach(() => {
   store = new ItemStore();
