@@ -1,26 +1,15 @@
 import { observable, action } from "mobx";
 import FetchRssFeed from "../utils/FetchRssFeed";
-import * as Constants from "../utils/Constants";
-
-interface feedListElement {
-  name: string;
-  url: string;
-}
+import * as LocalStorageManager from "../utils/LocalStorageManager";
 
 class FeedListStore {
-  @observable public feedList: feedListElement[] = [];
+  @observable public feedList: LocalStorageManager.feedListElement[] = [];
   @observable public name: string = "";
   @observable public url: string = "";
 
   @action.bound
   getFeedList() {
-    const storageFeedList = localStorage.getItem(Constants.FEED_LIST_KEY);
-    if (storageFeedList == null) {
-      this.feedList = [];
-      return;
-    }
-
-    this.feedList = JSON.parse(storageFeedList);
+    this.feedList = LocalStorageManager.getFeedList();
   }
 
   @action.bound
@@ -32,14 +21,14 @@ class FeedListStore {
     }
 
     json.results.forEach(() => {
-      const feedListElement: feedListElement = {
+      const feedListElement: LocalStorageManager.feedListElement = {
         name: this.name,
         url: this.url
       };
 
       this.feedList.push(feedListElement);
 
-      this.setLocalStorage();
+      LocalStorageManager.setLocalStorage(this.feedList);
     });
 
     return true;
@@ -51,14 +40,7 @@ class FeedListStore {
       return elem.name != name;
     });
 
-    this.setLocalStorage();
-  }
-
-  setLocalStorage() {
-    localStorage.setItem(
-      Constants.FEED_LIST_KEY,
-      JSON.stringify(this.feedList)
-    );
+    LocalStorageManager.setLocalStorage(this.feedList);
   }
 }
 

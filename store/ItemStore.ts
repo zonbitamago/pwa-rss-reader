@@ -1,6 +1,7 @@
 import { action, observable } from "mobx";
 import FetchRssFeed from "../utils/FetchRssFeed";
 import * as DayFormatter from "../utils/DayFormatter";
+import * as LocalStorageManager from "../utils/LocalStorageManager";
 
 export interface ItemElementInterface {
   alt: string;
@@ -26,14 +27,26 @@ class ItemStore {
 
   @action.bound
   async fetchItems(): Promise<void> {
+    const feedList = LocalStorageManager.getFeedList();
+
+    if (feedList.length == 0) {
+      return;
+    }
+
     this.isLoading = true;
 
-    const urls: string[] = ["https://feedforall.com/sample-feed.xml"];
+    const urls = feedList.map(elem => {
+      return elem.url;
+    });
     const json = await FetchRssFeed(urls);
     json.results.forEach(node => {
       const src: string =
         "https://www.google.com/s2/favicons?domain=" +
         node.feed.link.split("//")[1];
+
+      const domainName = feedList.filter(elem => {
+        return elem.url == node.url;
+      })[0].name;
 
       node.feed.items.forEach(element => {
         const itemName: string = element.title;
@@ -44,7 +57,7 @@ class ItemStore {
         const item: ItemElementInterface = {
           alt: "alt",
           src: src,
-          domainName: "Qiita",
+          domainName: domainName,
           date: date,
           url: url,
           itemName: itemName

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./index.css";
 import Header from "../components/Header/Header";
 import Side from "../components/Side/Side";
@@ -7,9 +7,10 @@ import * as StoreContainer from "../store/StoreContainer";
 
 const store = StoreContainer.getInstance();
 
-store.ItemStore.setTimer();
-
 const Index = () => {
+  useEffect(() => {
+    store.ItemStore.setTimer();
+  });
   return (
     <div className="Index">
       <Side store={store} />
