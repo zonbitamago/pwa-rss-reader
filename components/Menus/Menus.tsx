@@ -59,6 +59,7 @@ class Menus extends Component<MenusInterface, MenusStateInterface> {
         <Icon>
           <RssFeed
             onClick={() => {
+              store.FeedListStore.getFeedList();
               this.setRegistedListModalOpen(true);
             }}
           />
@@ -67,8 +68,7 @@ class Menus extends Component<MenusInterface, MenusStateInterface> {
             handleClose={() => {
               this.setRegistedListModalOpen(false);
             }}
-            // store={this.props.store}
-            // electronUtil={this.props.electronUtil}
+            store={store}
           />
         </Icon>
         <Icon>

@@ -27,21 +27,38 @@ class FeedListStore {
   async setFeedList() {
     const json = await FetchRssFeed([this.url]);
 
-    json.results.forEach(element => {
-      if (element.result) {
-        const feedListElement: feedListElement = {
-          name: this.name,
-          url: this.url
-        };
+    if (!json.results[0].result) {
+      return false;
+    }
 
-        this.feedList.push(feedListElement);
+    json.results.forEach(() => {
+      const feedListElement: feedListElement = {
+        name: this.name,
+        url: this.url
+      };
 
-        localStorage.setItem(
-          Constants.FEED_LIST_KEY,
-          JSON.stringify(this.feedList)
-        );
-      }
+      this.feedList.push(feedListElement);
+
+      this.setLocalStorage();
     });
+
+    return true;
+  }
+
+  @action.bound
+  deleteFeedList(name: string) {
+    this.feedList = this.feedList.filter(elem => {
+      return elem.name != name;
+    });
+
+    this.setLocalStorage();
+  }
+
+  setLocalStorage() {
+    localStorage.setItem(
+      Constants.FEED_LIST_KEY,
+      JSON.stringify(this.feedList)
+    );
   }
 }
 

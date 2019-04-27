@@ -9,80 +9,137 @@ import Snackbar from "@material-ui/core/Snackbar";
 import InfoIcon from "@material-ui/icons/Info";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
+import { StoreContainerInterface } from "../../store/StoreContainer";
+import { Component } from "react";
+import { observer } from "mobx-react";
+import RegistedListItem from "../RegistedListItem/RegistedListItem";
 
 export interface RegistedListModalInterface {
   open: boolean;
   handleClose: any;
+  store: StoreContainerInterface;
 }
 
-const RegistedListModal = (props: RegistedListModalInterface) => {
-  const urlList = null;
-  const yesButtonClick = undefined;
-  const open = false;
-  const snackbarClose = undefined;
-  const message = "";
-  const className = "";
+interface RegistedListModalState {
+  open: boolean;
+  message: string;
+  class: string;
+}
 
-  return (
-    <div className="RegistedListModal">
-      <Dialog
-        open={props.open}
-        onClose={props.handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">RegistedList</DialogTitle>
-        <DialogContent>
-          {urlList}
-          <Input
-            name="Name"
-            value=""
-            changeParentVal={() => console.log("RegistedModalInput!")}
-            // value={this.props.store.FeedListStore.name}
-            // changeParentVal={val => {
-            //   this.props.store.FeedListStore.name = val;
-            // }}
-          />
-          <Input
-            name="URL"
-            value=""
-            changeParentVal={() => console.log("RegistedModalInput!")}
-            // value={this.props.store.FeedListStore.url}
-            // changeParentVal={val => {
-            //   this.props.store.FeedListStore.url = val;
-            // }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button type="yes" handleClick={yesButtonClick} />
-          <Button type="no" handleClick={props.handleClose} />
-        </DialogActions>
-      </Dialog>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={open}
-        onClose={snackbarClose}
-        ContentProps={{ "aria-describedby": "message-id" }}
-        autoHideDuration={6000}
-        message={
-          <span id="message-id">
-            <InfoIcon />
-            {message}
-          </span>
-        }
-        action={[
-          <IconButton
-            key="close"
-            aria-label="Close"
-            color="inherit"
-            onClick={snackbarClose}
-          >
-            <CloseIcon className="close" />
-          </IconButton>
-        ]}
-        className={className}
-      />
-    </div>
-  );
-};
+@observer
+class RegistedListModal extends Component<
+  RegistedListModalInterface,
+  RegistedListModalState
+> {
+  public state: RegistedListModalState = {
+    open: false,
+    message: "",
+    class: ""
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.yesButtonClick = this.yesButtonClick.bind(this);
+    this.snackbarClose = this.snackbarClose.bind(this);
+  }
+
+  async yesButtonClick() {
+    const result = await this.props.store.FeedListStore.setFeedList();
+
+    if (!result) {
+      this.setState({
+        open: true,
+        message: "このURLは登録できません。",
+        class: "error"
+      });
+
+      return;
+    }
+
+    this.setState({
+      open: true,
+      message: "登録が完了しました。",
+      class: "success"
+    });
+    this.props.store.ItemStore.setTimer();
+  }
+
+  snackbarClose() {
+    this.setState({ open: false });
+  }
+
+  render() {
+    const { FeedListStore } = this.props.store;
+
+    const urlList = FeedListStore.feedList.map((elem, idx) => {
+      return (
+        <RegistedListItem
+          key={idx}
+          name={elem.name}
+          url={elem.url}
+          store={this.props.store}
+        />
+      );
+    });
+
+    return (
+      <div className="RegistedListModal">
+        <Dialog
+          open={this.props.open}
+          onClose={this.props.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">RegistedList</DialogTitle>
+          <DialogContent>
+            {urlList}
+            <Input
+              name="Name"
+              value={FeedListStore.name}
+              changeParentVal={val => {
+                FeedListStore.name = val;
+              }}
+            />
+            <Input
+              name="URL"
+              value={FeedListStore.url}
+              changeParentVal={val => {
+                FeedListStore.url = val;
+              }}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button type="yes" handleClick={this.yesButtonClick} />
+            <Button type="no" handleClick={this.props.handleClose} />
+          </DialogActions>
+        </Dialog>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          open={this.state.open}
+          onClose={this.snackbarClose}
+          ContentProps={{ "aria-describedby": "message-id" }}
+          autoHideDuration={6000}
+          message={
+            <span id="message-id">
+              <InfoIcon />
+              {this.state.message}
+            </span>
+          }
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={this.snackbarClose}
+            >
+              <CloseIcon className="close" />
+            </IconButton>
+          ]}
+          className={this.state.class}
+        />
+      </div>
+    );
+  }
+}
 
 export default RegistedListModal;

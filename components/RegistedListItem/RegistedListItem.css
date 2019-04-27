@@ -1,0 +1,9 @@
+.RegistedListItem {
+  list-style: none;
+}
+
+.RegistedListItem span {
+  color: #42a5f5;
+  text-decoration: underline;
+  cursor: pointer;
+}

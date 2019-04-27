@@ -17,11 +17,14 @@ describe("FeedListStore", function() {
 
   describe("getFeedList", function() {
     it("null localStorage is zero of feedListSize", async () => {
+      //実行
       store.getFeedList();
+      //検証
       expect(store.feedList).toEqual([]);
     });
 
     it("not null localStorage is collect feedList", async () => {
+      //データ準備
       localStorage.setItem(
         Constants.FEED_LIST_KEY,
         JSON.stringify([
@@ -32,7 +35,10 @@ describe("FeedListStore", function() {
         ])
       );
 
+      //実行
       store.getFeedList();
+
+      //検証
       expect(store.feedList).not.toEqual([]);
     });
   });
@@ -46,9 +52,10 @@ describe("FeedListStore", function() {
       store.url = urlTestData;
 
       //実行
-      await store.setFeedList();
+      const actual = await store.setFeedList();
 
       //検証
+      expect(actual).toBeTruthy();
       expect(store.feedList.length).toBe(1);
       expect(store.feedList[0].name).toEqual(nameTestData);
       expect(store.feedList[0].url).toEqual(urlTestData);
@@ -63,11 +70,56 @@ describe("FeedListStore", function() {
       store.url = urlTestData;
 
       //実行
-      await store.setFeedList();
+      const actual = await store.setFeedList();
+
+      //検証
+      expect(actual).toBeFalsy();
+      expect(store.feedList.length).toBe(0);
+      expect(localStorage.setItem).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("deleteFeedList", function() {
+    it("saved feed is delete", async () => {
+      //データ準備
+      const name = "savedurl";
+      const feedList = [
+        {
+          name: name,
+          url: "https://feedforall.com/sample-feed.xml"
+        }
+      ];
+      localStorage.setItem(Constants.FEED_LIST_KEY, JSON.stringify(feedList));
+      store.feedList = feedList;
+
+      //実行
+      store.deleteFeedList(name);
 
       //検証
       expect(store.feedList.length).toBe(0);
-      expect(localStorage.setItem).not.toHaveBeenCalled();
+      expect(localStorage.getItem(Constants.FEED_LIST_KEY)).toEqual("[]");
+    });
+
+    it("not saved feed is not deleted", async () => {
+      //データ準備
+      const name = "savedurl";
+      const feedList = [
+        {
+          name: name,
+          url: "https://feedforall.com/sample-feed.xml"
+        }
+      ];
+      localStorage.setItem(Constants.FEED_LIST_KEY, JSON.stringify(feedList));
+      store.feedList = feedList;
+
+      //実行
+      store.deleteFeedList("other");
+
+      //検証
+      expect(store.feedList.length).toBe(1);
+      expect(localStorage.getItem(Constants.FEED_LIST_KEY)).toEqual(
+        JSON.stringify(feedList)
+      );
     });
   });
 });
