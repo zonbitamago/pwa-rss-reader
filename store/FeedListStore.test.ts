@@ -1,9 +1,11 @@
 import FeedListStore from "./FeedListStore";
+import * as Constants from "../utils/Constants";
 
 let store: FeedListStore;
 
 beforeEach(() => {
   store = new FeedListStore();
+  localStorage.clear();
 });
 
 describe("FeedListStore", function() {
@@ -11,6 +13,28 @@ describe("FeedListStore", function() {
     expect(store.feedList).toEqual([]);
     expect(store.name).toEqual("");
     expect(store.url).toEqual("");
+  });
+
+  describe("getFeedList", function() {
+    it("null localStorage is zero of feedListSize", async () => {
+      store.getFeedList();
+      expect(store.feedList).toEqual([]);
+    });
+
+    it("not null localStorage is collect feedList", async () => {
+      localStorage.setItem(
+        Constants.FEED_LIST_KEY,
+        JSON.stringify([
+          {
+            name: "collecturl",
+            url: "https://feedforall.com/sample-feed.xml"
+          }
+        ])
+      );
+
+      store.getFeedList();
+      expect(store.feedList).not.toEqual([]);
+    });
   });
 
   describe("setFeedList", function() {
