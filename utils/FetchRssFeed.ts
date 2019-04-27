@@ -4,6 +4,16 @@ interface URL {
   url: string;
 }
 
+export interface FetchResultsInterface {
+  results: Array<FetchResultsElementInterface>;
+}
+
+export interface FetchResultsElementInterface {
+  result: boolean;
+  url: string;
+  feed: any;
+}
+
 const FetchRssFeed = async (urlsArr: string[]) => {
   const urls: URL[] = urlsArr.map((url: string) => {
     return { url: url };
@@ -24,7 +34,7 @@ const FetchRssFeed = async (urlsArr: string[]) => {
     }
   });
 
-  const json = await res.json();
+  const json: FetchResultsInterface = await res.json();
   return json;
 };
 
