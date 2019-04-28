@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 3em 1fr;
   grid-template-rows: 3em 1fr;
+  height: 100vh;
 }
 
 .Index .Side {

@@ -71,9 +71,9 @@ class Menus extends Component<MenusInterface, MenusStateInterface> {
             store={store}
           />
         </Icon>
-        <Icon>
+        {/* <Icon>
           <IndeterminateCheckBox />
-        </Icon>
+        </Icon> */}
         <Icon>
           <Settings
             onClick={() => {
