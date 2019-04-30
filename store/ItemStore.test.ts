@@ -60,9 +60,11 @@ describe("ItemStore", function() {
         "https://www.google.com/s2/favicons?domain=www.feedforall.com"
       );
       expect(item.domainName).toBe("SampleFeed");
-      expect(item.date).toBe("2004/10/27 04:01:01");
-      expect(item.url).toBe("http://www.feedforall.com");
-      expect(item.itemName).toBe("RSS Resources");
+      expect(item.date).toBe("2004/10/27 04:06:44");
+      expect(item.url).toBe(
+        "http://www.feedforall.com/feedforall-partners.htm"
+      );
+      expect(item.itemName).toBe("Recommended Web Based Feed Reader Software");
     });
 
     it("no fetchList does not fetch", async () => {

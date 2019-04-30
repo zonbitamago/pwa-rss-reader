@@ -1,5 +1,7 @@
 import FeedListStore from "./FeedListStore";
 import * as Constants from "../utils/Constants";
+import { fail } from "assert";
+import DuplicactionFeedError from "../error/DulicationFeedError";
 
 let store: FeedListStore;
 
@@ -76,6 +78,33 @@ describe("FeedListStore", function() {
       expect(actual).toBeFalsy();
       expect(store.feedList.length).toBe(0);
       expect(localStorage.setItem).not.toHaveBeenCalled();
+    });
+
+    it("duplicated url is not saved localstorage", async () => {
+      // テストデータ準備
+      const name = "savedurl";
+      const feedList = [
+        {
+          name: name,
+          url: "https://feedforall.com/sample-feed.xml"
+        }
+      ];
+      localStorage.setItem(Constants.FEED_LIST_KEY, JSON.stringify(feedList));
+      store.feedList = feedList;
+
+      store.name = "duplicatedURL";
+      store.url = "https://feedforall.com/sample-feed.xml";
+
+      //実行
+      let catchError: Error | undefined;
+      try {
+        await store.setFeedList();
+      } catch (error) {
+        catchError = error;
+      }
+
+      //検証
+      expect(catchError).toEqual(new DuplicactionFeedError());
     });
   });
 

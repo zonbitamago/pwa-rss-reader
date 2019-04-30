@@ -1,6 +1,7 @@
 import { observable, action } from "mobx";
 import FetchRssFeed from "../utils/FetchRssFeed";
 import * as LocalStorageManager from "../utils/LocalStorageManager";
+import DuplicactionFeedError from "../error/DulicationFeedError";
 
 class FeedListStore {
   @observable public feedList: LocalStorageManager.feedListElement[] = [];
@@ -14,6 +15,14 @@ class FeedListStore {
 
   @action.bound
   async setFeedList() {
+    const isDuplicated = this.feedList.some(elem => {
+      return elem.url === this.url;
+    });
+
+    if (isDuplicated) {
+      throw new DuplicactionFeedError();
+    }
+
     const json = await FetchRssFeed([this.url]);
 
     if (!json.results[0].result) {
