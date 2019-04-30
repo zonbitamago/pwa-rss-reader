@@ -66,6 +66,18 @@ class ItemStore {
       });
     });
 
+    this.saveItems = this.saveItems.slice().sort((a, b) => {
+      if (a.date < b.date) {
+        return 1;
+      }
+      if (a.date > b.date) {
+        return -1;
+      }
+
+      // names must be equal
+      return 0;
+    });
+
     this.items = this.saveItems;
     this.saveItems = [];
     this.isLoading = false;
