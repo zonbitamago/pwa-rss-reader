@@ -1,7 +1,8 @@
 import { observable, action } from "mobx";
 import FetchRssFeed from "../utils/FetchRssFeed";
 import * as LocalStorageManager from "../utils/LocalStorageManager";
-import DuplicactionFeedError from "../error/DulicationFeedError";
+import DuplicationFeedURLError from "../error/DuplicationFeedURLError";
+import InvalidFeedURLException from "../error/InvalidFeedURLException";
 
 class FeedListStore {
   @observable public feedList: LocalStorageManager.feedListElement[] = [];
@@ -20,13 +21,13 @@ class FeedListStore {
     });
 
     if (isDuplicated) {
-      throw new DuplicactionFeedError();
+      throw new DuplicationFeedURLError();
     }
 
     const json = await FetchRssFeed([this.url]);
 
     if (!json.results[0].result) {
-      return false;
+      throw new InvalidFeedURLException();
     }
 
     json.results.forEach(() => {
@@ -39,8 +40,6 @@ class FeedListStore {
 
       LocalStorageManager.setLocalStorage(this.feedList);
     });
-
-    return true;
   }
 
   @action.bound

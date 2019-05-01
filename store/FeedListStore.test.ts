@@ -1,7 +1,7 @@
 import FeedListStore from "./FeedListStore";
 import * as Constants from "../utils/Constants";
-import { fail } from "assert";
-import DuplicactionFeedError from "../error/DulicationFeedError";
+import DuplicationFeedURLError from "../error/DuplicationFeedURLError";
+import InvalidFeedURLException from "../error/InvalidFeedURLException";
 
 let store: FeedListStore;
 
@@ -46,36 +46,40 @@ describe("FeedListStore", function() {
   });
 
   describe("setFeedList", function() {
-    it("collectURL is saved localstorage", async () => {
+    it("valid URL is saved localstorage", async () => {
       // テストデータ準備
-      const nameTestData = "collecturl";
+      const nameTestData = "validurl";
       const urlTestData = "https://feedforall.com/sample-feed.xml";
       store.name = nameTestData;
       store.url = urlTestData;
 
       //実行
-      const actual = await store.setFeedList();
+      await store.setFeedList();
 
       //検証
-      expect(actual).toBeTruthy();
       expect(store.feedList.length).toBe(1);
       expect(store.feedList[0].name).toEqual(nameTestData);
       expect(store.feedList[0].url).toEqual(urlTestData);
       expect(localStorage.setItem).toHaveBeenCalledTimes(1);
     });
 
-    it("uncollectURL is not saved localstorage", async () => {
+    it("invalid URL is not saved localstorage", async () => {
       // テストデータ準備
-      const nameTestData = "uncollecturl";
+      const nameTestData = "invalidurl";
       const urlTestData = "https://example.com/";
       store.name = nameTestData;
       store.url = urlTestData;
 
       //実行
-      const actual = await store.setFeedList();
+      let catchError: Error | undefined;
+      try {
+        await store.setFeedList();
+      } catch (error) {
+        catchError = error;
+      }
 
       //検証
-      expect(actual).toBeFalsy();
+      expect(catchError).toEqual(new InvalidFeedURLException());
       expect(store.feedList.length).toBe(0);
       expect(localStorage.setItem).not.toHaveBeenCalled();
     });
@@ -104,7 +108,7 @@ describe("FeedListStore", function() {
       }
 
       //検証
-      expect(catchError).toEqual(new DuplicactionFeedError());
+      expect(catchError).toEqual(new DuplicationFeedURLError());
     });
   });
 

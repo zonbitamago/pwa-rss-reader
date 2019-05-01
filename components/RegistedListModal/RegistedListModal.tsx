@@ -13,6 +13,8 @@ import { StoreContainerInterface } from "../../store/StoreContainer";
 import { Component } from "react";
 import { observer } from "mobx-react";
 import RegistedListItem from "../RegistedListItem/RegistedListItem";
+import DuplicationFeedURLError from "../../error/DuplicationFeedURLError";
+import InvalidFeedURLException from "../../error/InvalidFeedURLException";
 
 export interface RegistedListModalInterface {
   open: boolean;
@@ -45,16 +47,28 @@ class RegistedListModal extends Component<
   }
 
   async yesButtonClick() {
-    const result = await this.props.store.FeedListStore.setFeedList();
+    try {
+      await this.props.store.FeedListStore.setFeedList();
+    } catch (error) {
+      if (error instanceof DuplicationFeedURLError) {
+        this.setState({
+          open: true,
+          message: "すでに登録済みのURLです。",
+          class: "error"
+        });
 
-    if (!result) {
-      this.setState({
-        open: true,
-        message: "このURLは登録できません。",
-        class: "error"
-      });
+        return;
+      }
 
-      return;
+      if (error instanceof InvalidFeedURLException) {
+        this.setState({
+          open: true,
+          message: "このURLは登録できません。",
+          class: "error"
+        });
+
+        return;
+      }
     }
 
     this.setState({
