@@ -19,16 +19,18 @@ const RegistedListItem = (props: RegistedListItemInterface) => {
     store.FeedListStore.deleteFeedList(name);
     store.ItemStore.setTimer();
   };
+
+  const linkTextClick = url => {
+    window.open(url, "_blank");
+  };
+
   return (
     <div className="RegistedListItem">
       <ListItem component="a">
         <ListItemText
           className="RegistedListItem-Text"
           primary={name}
-          //   onClick={this.props.electronUtil.openBrowser.bind(
-          //     this,
-          //     this.props.url
-          //   )}
+          onClick={() => linkTextClick(url)}
         />
         <ListItemSecondaryAction>
           <IconButton aria-label="Delete" onClick={deleteClick}>
