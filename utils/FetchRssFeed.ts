@@ -23,7 +23,7 @@ const FetchRssFeed = async (urlsArr: string[]) => {
     urls: urls
   };
 
-  const res = await nodefetch("https://goparallelfeed.now.sh", {
+  return nodefetch("https://goparallelfeed.now.sh", {
     method: "post",
     body: JSON.stringify(body),
     headers: {
@@ -32,10 +32,32 @@ const FetchRssFeed = async (urlsArr: string[]) => {
       // https://github.com/axios/axios/issues/853#issuecomment-432283879
       "content-type": "application/x-www-form-urlencoded"
     }
-  });
+  })
+    .then(res => {
+      return res.json();
+    })
+    .then(json => {
+      const result: FetchResultsInterface = json;
+      return result;
+    });
 
-  const json: FetchResultsInterface = await res.json();
-  return json;
+  // Promise.all(promiseList).then((feedList) => {
+
+  // })
+
+  // const res = await nodefetch("https://goparallelfeed.now.sh", {
+  //   method: "post",
+  //   body: JSON.stringify(body),
+  //   headers: {
+  //     // "Content-Type": "application/json",
+  //     // CORS対策のため
+  //     // https://github.com/axios/axios/issues/853#issuecomment-432283879
+  //     "content-type": "application/x-www-form-urlencoded"
+  //   }
+  // });
+
+  // const json: FetchResultsInterface = await res.json();
+  // return json;
 };
 
 export default FetchRssFeed;
