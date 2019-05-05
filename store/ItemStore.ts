@@ -53,6 +53,8 @@ class ItemStore {
         const url: string = element.link;
         const date: string = DayFormatter.YYYYMMDDHH24MMSS(
           element.publishedParsed
+            ? element.publishedParsed
+            : element.updatedParsed
         );
         const item: ItemElementInterface = {
           alt: "alt",
