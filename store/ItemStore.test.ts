@@ -93,4 +93,53 @@ describe("ItemStore", function() {
       expect(store.timerId).not.toEqual(timerId);
     });
   });
+
+  describe("sortSaveItems", function() {
+    it("sort desc date", async () => {
+      //テスト準備
+      store.saveItems = [
+        {
+          date: "1",
+          alt: "",
+          src: "",
+          domainName: "",
+          url: "",
+          itemName: ""
+        },
+        {
+          date: "3",
+          alt: "",
+          src: "",
+          domainName: "",
+          url: "",
+          itemName: ""
+        },
+        {
+          date: "2",
+          alt: "",
+          src: "",
+          domainName: "",
+          url: "",
+          itemName: ""
+        },
+        {
+          date: "2",
+          alt: "",
+          src: "",
+          domainName: "",
+          url: "",
+          itemName: ""
+        }
+      ];
+
+      //テスト実行
+      store.sortSaveItems();
+
+      //検証
+      expect(store.saveItems[0].date).toEqual("3");
+      expect(store.saveItems[1].date).toEqual("2");
+      expect(store.saveItems[2].date).toEqual("2");
+      expect(store.saveItems[3].date).toEqual("1");
+    });
+  });
 });

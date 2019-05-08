@@ -36,11 +36,6 @@ class ItemStore {
 
     this.isLoading = true;
 
-    // const urls = feedList.map(elem => {
-    //   return elem.url;
-    // });
-    // const json = await FetchRssFeed(urls);
-
     const promiseList = ArrayUtils.splitArrayGroups(feedList, 5).map(groups => {
       const urls = groups.map(elem => {
         return elem.url;
@@ -81,17 +76,7 @@ class ItemStore {
         });
       });
 
-      this.saveItems = this.saveItems.slice().sort((a, b) => {
-        if (a.date < b.date) {
-          return 1;
-        }
-        if (a.date > b.date) {
-          return -1;
-        }
-
-        // names must be equal
-        return 0;
-      });
+      this.sortSaveItems();
 
       this.items = this.saveItems;
       this.saveItems = [];
@@ -112,6 +97,20 @@ class ItemStore {
       this.fetchItems,
       this.updateDuration * 60 * 1000
     );
+  }
+
+  sortSaveItems() {
+    this.saveItems = this.saveItems.slice().sort((a, b) => {
+      if (a.date < b.date) {
+        return 1;
+      }
+      if (a.date > b.date) {
+        return -1;
+      }
+
+      // names must be equal
+      return 0;
+    });
   }
 }
 
