@@ -1,7 +1,6 @@
 import "./Item.css";
 import Divider from "@material-ui/core/Divider";
 import DomainIcon from "../DomainIcon/DomainIcon";
-import dayjs from "dayjs";
 import { ItemElementInterface } from "../../store/ItemStore";
 
 export interface ItemInterface {
@@ -26,7 +25,9 @@ const Item = (props: ItemInterface) => {
           <h6 className="date">{date}</h6>
         </div>
         <div className="bottom">
-          <a href={url}>{itemName}</a>
+          <a href={url} target="_blank">
+            {itemName}
+          </a>
         </div>
       </div>
       <Divider className="divider" />
