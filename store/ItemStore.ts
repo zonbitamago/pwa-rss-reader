@@ -19,6 +19,7 @@ class ItemStore {
   @observable public saveItems: ItemElementInterface[] = [];
   @observable public isLoading: boolean = false;
   @observable public updateTime: string = DayFormatter.HH24MMSS();
+  @observable public hasUpdate: boolean = false;
   public timerId: NodeJS.Timeout | undefined;
 
   @action.bound
@@ -78,10 +79,11 @@ class ItemStore {
 
       this.sortSaveItems();
 
-      this.items = this.saveItems;
-      this.saveItems = [];
-      this.isLoading = false;
+      // this.items = this.saveItems;
+      // this.saveItems = [];
       this.updateTime = DayFormatter.HH24MMSS();
+      this.hasUpdate = this.isDiffItems();
+      this.isLoading = false;
     });
   }
 
@@ -111,6 +113,16 @@ class ItemStore {
       // names must be equal
       return 0;
     });
+  }
+
+  @action.bound
+  updateItems() {
+    this.items = this.saveItems;
+    this.hasUpdate = this.isDiffItems();
+  }
+
+  isDiffItems() {
+    return this.items !== this.saveItems;
   }
 }
 

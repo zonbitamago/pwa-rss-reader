@@ -1,4 +1,4 @@
-import ItemStore from "./ItemStore";
+import ItemStore, { ItemElementInterface } from "./ItemStore";
 import MockDate from "mockdate";
 import * as Constants from "../utils/Constants";
 
@@ -21,6 +21,7 @@ describe("ItemStore", function() {
     expect(store.isLoading).toBeFalsy();
     expect(store.updateTime).toBe("12:34:56");
     expect(store.timerId).toBeUndefined();
+    expect(store.hasUpdate).toBeFalsy();
   });
 
   describe("setUpdateDuration", function() {
@@ -53,18 +54,22 @@ describe("ItemStore", function() {
 
       //検証
       expect(store.updateTime).toBe("23:45:01");
+      expect(store.hasUpdate).toBeTruthy();
+      expect(store.isLoading).toBeFalsy();
 
-      const item = store.items[0];
-      expect(item.alt).toBe("alt");
-      expect(item.src).toBe(
+      const saveItems = store.saveItems[0];
+      expect(saveItems.alt).toBe("alt");
+      expect(saveItems.src).toBe(
         "https://www.google.com/s2/favicons?domain=www.feedforall.com"
       );
-      expect(item.domainName).toBe("SampleFeed");
-      expect(item.date).toBe("2004/10/27 04:06:44");
-      expect(item.url).toBe(
+      expect(saveItems.domainName).toBe("SampleFeed");
+      expect(saveItems.date).toBe("2004/10/27 04:06:44");
+      expect(saveItems.url).toBe(
         "http://www.feedforall.com/feedforall-partners.htm"
       );
-      expect(item.itemName).toBe("Recommended Web Based Feed Reader Software");
+      expect(saveItems.itemName).toBe(
+        "Recommended Web Based Feed Reader Software"
+      );
     });
 
     it("no fetchList does not fetch", async () => {
@@ -140,6 +145,31 @@ describe("ItemStore", function() {
       expect(store.saveItems[1].date).toEqual("2");
       expect(store.saveItems[2].date).toEqual("2");
       expect(store.saveItems[3].date).toEqual("1");
+    });
+  });
+
+  describe("updateItems", function() {
+    it("swap items", async () => {
+      //テスト準備
+      const saveItems: ItemElementInterface[] = [
+        {
+          alt: "dummyAlt",
+          src: "dummySrc",
+          domainName: "dummyDomainName",
+          date: "dummyDate",
+          url: "dummyUrl",
+          itemName: "dummyItemName"
+        }
+      ];
+
+      store.saveItems = saveItems;
+
+      //実行
+      store.updateItems();
+
+      //検証
+      expect(store.items).toEqual(saveItems);
+      expect(store.hasUpdate).toBeFalsy();
     });
   });
 });
