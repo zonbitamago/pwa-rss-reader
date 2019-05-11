@@ -46,6 +46,7 @@ class ItemStore {
     });
 
     return Promise.all(promiseList).then(groups => {
+      this.saveItems = [];
       groups.forEach(json => {
         json.results.forEach(node => {
           const src: string =
@@ -93,6 +94,7 @@ class ItemStore {
 
     // 初回呼び出し
     await this.fetchItems();
+    this.updateItems();
     this.timerId = setInterval(
       this.fetchItems,
       this.updateDuration * 60 * 1000
@@ -117,6 +119,7 @@ class ItemStore {
   updateItems() {
     this.items = this.saveItems;
     this.hasUpdate = this.isDiffItems();
+    this.saveItems = [];
   }
 
   isDiffItems() {

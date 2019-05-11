@@ -76,7 +76,7 @@ class RegistedListModal extends Component<
       message: "登録が完了しました。",
       class: "success"
     });
-    this.props.store.ItemStore.setTimer();
+    await this.props.store.ItemStore.setTimer();
   }
 
   snackbarClose() {

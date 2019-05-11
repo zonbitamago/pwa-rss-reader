@@ -1,0 +1,12 @@
+.Main .update > * {
+  background-color: #2196f3;
+  flex-grow: 0 !important;
+  margin-bottom: 2em;
+  margin-left: 3em;
+  border-radius: 1em;
+  cursor: pointer;
+}
+
+.Main .update > * > * {
+  margin: auto;
+}

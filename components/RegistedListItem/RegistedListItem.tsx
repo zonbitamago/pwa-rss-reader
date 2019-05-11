@@ -15,9 +15,9 @@ export interface RegistedListItemInterface {
 const RegistedListItem = (props: RegistedListItemInterface) => {
   const { name, url, store } = props;
 
-  const deleteClick = () => {
+  const deleteClick = async () => {
     store.FeedListStore.deleteFeedList(name);
-    store.ItemStore.setTimer();
+    await store.ItemStore.setTimer();
   };
 
   const linkTextClick = url => {
