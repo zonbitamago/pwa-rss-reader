@@ -79,8 +79,6 @@ class ItemStore {
 
       this.sortSaveItems();
 
-      // this.items = this.saveItems;
-      // this.saveItems = [];
       this.updateTime = DayFormatter.HH24MMSS();
       this.hasUpdate = this.isDiffItems();
       this.isLoading = false;
