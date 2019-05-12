@@ -170,6 +170,7 @@ describe("ItemStore", function() {
       //検証
       expect(store.items).toEqual(saveItems);
       expect(store.hasUpdate).toBeFalsy();
+      expect(store.saveItems).toEqual([]);
     });
   });
 });

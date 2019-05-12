@@ -1,5 +1,7 @@
 import { action, observable } from "mobx";
-import FetchRssFeed from "../utils/FetchRssFeed";
+import FetchRssFeed, {
+  FetchResultsElementInterface
+} from "../utils/FetchRssFeed";
 import * as DayFormatter from "../utils/DayFormatter";
 import * as LocalStorageManager from "../utils/LocalStorageManager";
 import * as ArrayUtils from "../utils/ArrayUtils";
@@ -49,32 +51,7 @@ class ItemStore {
       this.saveItems = [];
       groups.forEach(json => {
         json.results.forEach(node => {
-          const src: string =
-            "https://www.google.com/s2/favicons?domain=" +
-            node.feed.link.split("//")[1];
-
-          const domainName = feedList.filter(elem => {
-            return elem.url == node.url;
-          })[0].name;
-
-          node.feed.items.forEach(element => {
-            const itemName: string = element.title;
-            const url: string = element.link;
-            const date: string = DayFormatter.YYYYMMDDHH24MMSS(
-              element.publishedParsed
-                ? element.publishedParsed
-                : element.updatedParsed
-            );
-            const item: ItemElementInterface = {
-              alt: "alt",
-              src: src,
-              domainName: domainName,
-              date: date,
-              url: url,
-              itemName: itemName
-            };
-            this.saveItems.push(item);
-          });
+          this.pushSaveItems(node, feedList);
         });
       });
 
@@ -83,6 +60,36 @@ class ItemStore {
       this.updateTime = DayFormatter.HH24MMSS();
       this.hasUpdate = this.isDiffItems();
       this.isLoading = false;
+    });
+  }
+
+  private pushSaveItems(
+    node: FetchResultsElementInterface,
+    feedList: LocalStorageManager.feedListElement[]
+  ) {
+    const src: string =
+      "https://www.google.com/s2/favicons?domain=" +
+      node.feed.link.split("//")[1];
+    const domainName = feedList.filter(elem => {
+      return elem.url == node.url;
+    })[0].name;
+    node.feed.items.forEach(element => {
+      const itemName: string = element.title;
+      const url: string = element.link;
+      const date: string = DayFormatter.YYYYMMDDHH24MMSS(
+        element.publishedParsed
+          ? element.publishedParsed
+          : element.updatedParsed
+      );
+      const item: ItemElementInterface = {
+        alt: "alt",
+        src: src,
+        domainName: domainName,
+        date: date,
+        url: url,
+        itemName: itemName
+      };
+      this.saveItems.push(item);
     });
   }
 
