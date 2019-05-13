@@ -33,6 +33,9 @@ describe("ItemStore", function() {
       it(cases.title, async () => {
         store.setUpdateDuration(cases.arg);
         expect(store.updateDuration).toBe(cases.expected);
+        expect(localStorage.getItem(Constants.UPDATE_DURATION_KEY)).toBe(
+          cases.expected.toString()
+        );
       });
     });
   });

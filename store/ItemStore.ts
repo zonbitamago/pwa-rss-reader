@@ -26,7 +26,9 @@ class ItemStore {
 
   @action.bound
   setUpdateDuration(updateDuration: number): void {
+    LocalStorageManager.setUpdateDuration(updateDuration);
     this.updateDuration = updateDuration;
+    this.setTimer();
   }
 
   @action.bound
