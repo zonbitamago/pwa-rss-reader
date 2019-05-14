@@ -97,6 +97,8 @@ class ItemStore {
 
   @action.bound
   async setTimer() {
+    this.updateDuration = LocalStorageManager.getUpdateDuration();
+
     if (this.timerId != undefined) {
       clearInterval(this.timerId);
     }
