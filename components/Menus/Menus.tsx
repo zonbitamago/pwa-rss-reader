@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./Menus.css";
 import Refresh from "@material-ui/icons/Refresh";
 import RssFeed from "@material-ui/icons/RssFeed";
-import IndeterminateCheckBox from "@material-ui/icons/IndeterminateCheckBox";
 import Settings from "@material-ui/icons/Settings";
 import { GoMarkGithub } from "react-icons/go";
 import Icon from "../Icon/Icon";
@@ -71,9 +70,6 @@ class Menus extends Component<MenusInterface, MenusStateInterface> {
             store={store}
           />
         </Icon>
-        {/* <Icon>
-          <IndeterminateCheckBox />
-        </Icon> */}
         <Icon>
           <Settings
             onClick={() => {
@@ -90,7 +86,14 @@ class Menus extends Component<MenusInterface, MenusStateInterface> {
           />
         </Icon>
         <Icon>
-          <GoMarkGithub />
+          <GoMarkGithub
+            onClick={() =>
+              window.open(
+                "https://github.com/zonbitamago/pwa-rss-reader",
+                "_blank"
+              )
+            }
+          />
         </Icon>
       </div>
     );
