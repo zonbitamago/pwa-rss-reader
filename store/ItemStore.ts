@@ -134,7 +134,7 @@ class ItemStore {
   }
 
   isDiffItems() {
-    return this.items.toString() != this.saveItems.toString();
+    return JSON.stringify(this.items) != JSON.stringify(this.saveItems);
   }
 }
 

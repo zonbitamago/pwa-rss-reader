@@ -3,6 +3,7 @@ import "./Menus.css";
 import Refresh from "@material-ui/icons/Refresh";
 import RssFeed from "@material-ui/icons/RssFeed";
 import Settings from "@material-ui/icons/Settings";
+import AccountBox from "@material-ui/icons/AccountBox";
 import { GoMarkGithub } from "react-icons/go";
 import Icon from "../Icon/Icon";
 import RegistedListModal from "../RegistedListModal/RegistedListModal";
@@ -54,6 +55,9 @@ class Menus extends Component<MenusInterface, MenusStateInterface> {
               store.ItemStore.fetchItems();
             }}
           />
+        </Icon>
+        <Icon>
+          <AccountBox />
         </Icon>
         <Icon>
           <RssFeed
