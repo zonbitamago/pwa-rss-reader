@@ -25,6 +25,7 @@
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "dayjs": "^1.8.11",
+    "dotenv": "^8.0.0",
     "mobx": "^5.9.4",
     "mobx-react": "^5.4.3",
     "next": "^8.0.3",
