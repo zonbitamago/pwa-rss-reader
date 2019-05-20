@@ -26,6 +26,7 @@
     "@zeit/next-typescript": "^1.1.1",
     "dayjs": "^1.8.11",
     "dotenv": "^8.0.0",
+    "firebase": "^6.0.2",
     "mobx": "^5.9.4",
     "mobx-react": "^5.4.3",
     "next": "^8.0.3",
