@@ -57,7 +57,11 @@ class Menus extends Component<MenusInterface, MenusStateInterface> {
           />
         </Icon>
         <Icon>
-          <AccountBox />
+          <AccountBox
+            onClick={() => {
+              location.href = "/Login";
+            }}
+          />
         </Icon>
         <Icon>
           <RssFeed
