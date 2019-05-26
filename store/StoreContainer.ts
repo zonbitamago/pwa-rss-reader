@@ -5,14 +5,14 @@ import FirebaseStore from "./FirebaseStore";
 export interface StoreContainerInterface {
   ItemStore: ItemStore;
   FeedListStore: FeedListStore;
-  FIrebaseStore: FirebaseStore;
+  FirebaseStore: FirebaseStore;
 }
 
 export const getInstance = () => {
   const container: StoreContainerInterface = {
     ItemStore: new ItemStore(),
     FeedListStore: new FeedListStore(),
-    FIrebaseStore: new FirebaseStore()
+    FirebaseStore: new FirebaseStore()
   };
   return container;
 };
